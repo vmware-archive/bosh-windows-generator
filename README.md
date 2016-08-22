@@ -4,7 +4,8 @@ This tool generates a Garden Windows manifest that can be deployed without any m
 
 ### Inputs
 
-- A Cloud Foundry manifest file (ssh into the Ops Manager director and run
+- A Cloud Foundry manifest file
+    - `ssh` into the Ops Manager director and run
   
   ```
   bosh download manifest <CF_DEPLOYMENT_NAME> cf.yml

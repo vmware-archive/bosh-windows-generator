@@ -1,4 +1,4 @@
-require 'generate_manifest'
+require_relative '../generate_manifest'
 
 describe GenerateManifest do
   input = <<-EOF
@@ -56,7 +56,7 @@ EOF
   end
 
  it "should generate a correct manifest" do
-    generated_manifest = GenerateManifest.run(@input_file.path,"vsphere")
+    generated_manifest = YAML.load(GenerateManifest.run(@input_file.path,"vsphere"))
 
     cells = generated_manifest['instance_groups'].select { |i| i['name'] == 'cell_windows' }
     expect(cells.length).to eq(1)

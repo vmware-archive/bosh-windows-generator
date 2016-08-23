@@ -16,7 +16,7 @@ class GenerateManifest
         'version'=> 'latest'
       }],
       'stemcells'=> [{
-        'os'=> '',
+        'os'=> 'windows2012R2',
         'alias'=> 'windows',
         'version'=> 'latest',
       }],
@@ -39,7 +39,7 @@ class GenerateManifest
       abort 'diego_cell not found in manifest'
     end
     diego_cell = cells[0]
-    diego_cell['properties']['diego']['rep']['preloaded_rootfses'] = ['windows2012R2:/tmp/windows2012R']
+    diego_cell['properties']['diego']['rep']['preloaded_rootfses'] = ['windows2012R2:/tmp/windows2012R2']
     diego_cell['properties']['diego']['ssl']= {'skip_cert_verify'=> true}
     output['instance_groups'][0]['properties'] = diego_cell['properties']
     output['instance_groups'][0]['networks']= diego_cell['networks']
@@ -47,10 +47,8 @@ class GenerateManifest
     output['instance_groups'][0]['azs']= diego_cell['azs']
 
     if target_type == 'vsphere'
-      output['stemcells'][0]['os']= 'windows'
       output['instance_groups'][0]['vm_type'] = 'xlarge'
     elsif target_type == 'aws'
-      output['stemcells'][0]['os']= 'windows2012R2'
       output['instance_groups'][0]['vm_type'] = 'm3.xlarge'
     else
       abort 'Unknown target e.g vsphere,aws'

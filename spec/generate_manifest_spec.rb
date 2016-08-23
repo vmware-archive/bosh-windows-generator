@@ -60,9 +60,9 @@ EOF
 
     cells = generated_manifest['instance_groups'].select { |i| i['name'] == 'cell_windows' }
     expect(cells.length).to eq(1)
-    expect(cells[0]['properties']['diego']['rep']['preloaded_rootfses']).to eq(["windows2012R2:/tmp/windows2012R"])
+    expect(cells[0]['properties']['diego']['rep']['preloaded_rootfses']).to eq(["windows2012R2:/tmp/windows2012R2"])
     expect(cells[0]['properties']['diego']['ssl']['skip_cert_verify']).to eq(true)
     expect(cells[0]['vm_type']).to eq("xlarge")
-    expect(generated_manifest['stemcells'][0]['os']).to eq("windows")
+    expect(generated_manifest['stemcells'][0]['os']).to eq("windows2012R2")
   end
 end

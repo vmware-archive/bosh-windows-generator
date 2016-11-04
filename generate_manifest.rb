@@ -29,6 +29,7 @@ class GenerateManifest
           {'name'=> 'consul_agent_windows', 'release'=> 'garden-windows'},
           {'name'=> 'garden-windows', 'release'=> 'garden-windows'},
           {'name'=> 'metron_agent_windows', 'release'=> 'garden-windows'},
+          {'name'=> 'hakim', 'release'=> 'garden-windows'},
         ],
         'stemcell'=> 'windows',
       }],

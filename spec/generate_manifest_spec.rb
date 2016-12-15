@@ -64,6 +64,7 @@ EOF
     expect(cells[0]['instances'].to_i).to eq(@num_windows_cells)
     expect(cells[0]['properties']['diego']['rep']['preloaded_rootfses']).to eq(["windows2012R2:/tmp/windows2012R2"])
     expect(cells[0]['properties']['diego']['ssl']['skip_cert_verify']).to eq(true)
+    expect(cells[0]['networks'][0]['name']).to eq('windows-cells')
     expect(cells[0]['vm_type']).to eq("xlarge")
     expect(generated_manifest['stemcells'][0]['os']).to eq("windows2012R2")
   end

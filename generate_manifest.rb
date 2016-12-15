@@ -43,7 +43,7 @@ class GenerateManifest
     diego_cell['properties']['diego']['rep']['preloaded_rootfses'] = ['windows2012R2:/tmp/windows2012R2']
     diego_cell['properties']['diego']['ssl']= {'skip_cert_verify'=> true}
     output['instance_groups'][0]['properties'] = diego_cell['properties']
-    output['instance_groups'][0]['networks']= 'windows-cell'
+    output['instance_groups'][0]['networks']= [{'name' => 'windows-cells', 'default' => ['dns', 'gateway']}]
     output['instance_groups'][0]['update']= diego_cell['update'] unless diego_cell['update'].nil?
     output['instance_groups'][0]['azs']= diego_cell['azs']
 

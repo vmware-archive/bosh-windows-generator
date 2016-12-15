@@ -49,6 +49,8 @@ EOF
     @input_file.write(input)
     @input_file.rewind
     @input_file.close
+
+    @num_windows_cells = 2
   end
 
   after(:each) do
@@ -56,10 +58,10 @@ EOF
   end
 
  it "should generate a correct manifest" do
-    generated_manifest = YAML.load(GenerateManifest.run(@input_file.path,"vsphere"))
+    generated_manifest = YAML.load(GenerateManifest.run(@input_file.path,"vsphere", @num_windows_cells))
 
     cells = generated_manifest['instance_groups'].select { |i| i['name'] == 'cell_windows' }
-    expect(cells.length).to eq(1)
+    expect(cells[0]['instances'].to_i).to eq(@num_windows_cells)
     expect(cells[0]['properties']['diego']['rep']['preloaded_rootfses']).to eq(["windows2012R2:/tmp/windows2012R2"])
     expect(cells[0]['properties']['diego']['ssl']['skip_cert_verify']).to eq(true)
     expect(cells[0]['vm_type']).to eq("xlarge")

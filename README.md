@@ -4,8 +4,7 @@ This tool generates a Garden Windows manifest that can be deployed without any m
 
 ### Environment Prerequisites
 
-- Create a `Service Network` in the Ops Manager web interface named `windows-cells`
-- Create an `Availability Zone` in the Ops Manager web interface named `windows-cells`
+- Create a `Service Network` in the Ops Manager web interface named `windows-cells` and connect it to the `default` Availability Zone
 
 ### Inputs
 
@@ -22,7 +21,7 @@ This tool generates a Garden Windows manifest that can be deployed without any m
 
 Run the following from the Ops Manager VM:
 
-* `git clone https://github.com/pivotal-cf/bosh-windows-generator.git && cd bosh-windows-generator`
+* Copy `generate.rb` from this repository or run: `git clone https://github.com/pivotal-cf/bosh-windows-generator.git && cd bosh-windows-generator`
 
 * `./generate_manifest.rb <PATH_TO_CF_MANIFEST> <IAAS_TARGET> > /tmp/garden-windows.yml`
 

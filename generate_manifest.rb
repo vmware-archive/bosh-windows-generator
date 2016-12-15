@@ -4,7 +4,7 @@ require 'yaml'
 
 
 class GenerateManifest
-  def self.run(input_manifest_path,target_type)
+  def self.run(input_manifest_path, target_type, instances)
     input = YAML.load_file(input_manifest_path)
 
     output = {
@@ -22,7 +22,7 @@ class GenerateManifest
       }],
       'instance_groups'=> [{
         'name'=> 'cell_windows',
-        'instances'=> 1,
+        'instances'=> instances,
         'lifecycle'=> 'service',
         'jobs'=> [
           {'name'=> 'rep_windows', 'release'=> 'garden-windows'},
@@ -43,7 +43,7 @@ class GenerateManifest
     diego_cell['properties']['diego']['rep']['preloaded_rootfses'] = ['windows2012R2:/tmp/windows2012R2']
     diego_cell['properties']['diego']['ssl']= {'skip_cert_verify'=> true}
     output['instance_groups'][0]['properties'] = diego_cell['properties']
-    output['instance_groups'][0]['networks']= diego_cell['networks']
+    output['instance_groups'][0]['networks']= 'windows-cell'
     output['instance_groups'][0]['update']= diego_cell['update'] unless diego_cell['update'].nil?
     output['instance_groups'][0]['azs']= diego_cell['azs']
 
@@ -60,9 +60,12 @@ class GenerateManifest
 end
 
 if __FILE__ == $0
-  raise(ArgumentError, 'Incorrect number of arguments provided (#{ARGV.length}),'\
-  'must provide manifest file and IAAS VM type') unless ARGV.length == 2
-
-  puts GenerateManifest.run(ARGV[0], ARGV[1])
+  raise(ArgumentError, "Incorrect number of arguments provided (#{ARGV.length}).\n"\
+        "Must provide manifest file and IAAS VM type. Number of cells are optional.\n"\
+        "e.g.  ./generate_manifest.rb /tmp/cf.yml vsphere 4") unless ARGV.length >= 2
+  instances = 1
+  instances = ARGV[2].to_i unless (ARGV[2].nil?)
+  raise(ArgumentError, "Number of instances is not an integer") if instances == 0
+  puts GenerateManifest.run(ARGV[0], ARGV[1], instances)
 end
 
